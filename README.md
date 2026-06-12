@@ -202,7 +202,7 @@ You can test the API using:
 
 ---
 
-## 👩‍💻 Author
+## 👩‍💻 Author "IMANE LAMZAOUAK"
 
 Built as part of backend learning and experimentation with authentication systems.
 
