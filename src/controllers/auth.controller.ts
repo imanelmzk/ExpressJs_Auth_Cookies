@@ -1,15 +1,25 @@
 import express from 'express';
 
-const router = express.Router();
+const authRoutes = express.Router();
 
-router.post('/register', (req, res) => {
+authRoutes.post('/register', (req, res) => {
     // Handle user registration logic here
     res.send('User registered successfully');
 });
 
-router.post('/login', (req, res) => {
+authRoutes.post('/login', (req, res) => {
     // Handle user login logic here
-    res.send('User logged in successfully');
+    //res.send("LOGGIN OK");
+    const {email, password} = req.body;
+
+    console.log("EMAIL: ", email);
+    console.log("PASSWORD: ", password);
+
+    return res.json({
+        message: "Login successful",
+        email,
+        password
+    });
 });
 
-export default router;
+export default authRoutes;
