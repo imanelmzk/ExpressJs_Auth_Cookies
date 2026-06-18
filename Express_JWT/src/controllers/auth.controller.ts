@@ -1,25 +1,26 @@
-import express from 'express';
+import {Request, Response} from 'express';
 
-const authRoutes = express.Router();
+export const register = (req : Request, res : Response) =>{
+    res.send("Register endpoint, or User registered successfully");
+};
 
-authRoutes.post('/register', (req, res) => {
-    // Handle user registration logic here
-    res.send('User registered successfully');
-});
-
-authRoutes.post('/login', (req, res) => {
-    // Handle user login logic here
-    //res.send("LOGGIN OK");
+export const login = (req:Request, res: Response) =>{
     const {email, password} = req.body;
 
-    console.log("EMAIL: ", email);
-    console.log("PASSWORD: ", password);
+    const fakeUser = {
+        email : "test@test.com",
+        password : "123456"
+    };
+
+    if(email !== fakeUser.email || password !== fakeUser.password) {
+        return res.status(401).json({
+            message : "Invalid credentials"
+        });
+    }
 
     return res.json({
-        message: "Login successful",
+        message : "login successful",
         email,
         password
-    });
-});
-
-export default authRoutes;
+    })
+}

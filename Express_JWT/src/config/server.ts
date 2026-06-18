@@ -1,7 +1,7 @@
 import express, {Application} from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import authRoutes from '../controllers/auth.controller';
+import authRoutes from '../router/auth.routes';
 import authMiddleware from '../middleware/auth.middleware';
 
 
