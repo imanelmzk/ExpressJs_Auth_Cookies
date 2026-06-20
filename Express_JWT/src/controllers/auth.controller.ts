@@ -1,4 +1,5 @@
 import {Request, Response} from 'express';
+import jwt from 'jsonwebtoken';
 
 export const register = (req : Request, res : Response) =>{
     res.send("Register endpoint, or User registered successfully");
@@ -18,9 +19,17 @@ export const login = (req:Request, res: Response) =>{
         });
     }
 
+    // Generate JWT token
+    const token = jwt.sign(
+        {email : fakeUser.email}, // payload
+        "mysecret", // secret key
+        {expiresIn : "1h"} // options : durrée de validité du token
+    )
+
     return res.json({
         message : "login successful",
         email,
-        password
+        token
     })
+    
 }
