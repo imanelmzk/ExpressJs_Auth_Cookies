@@ -26,10 +26,27 @@ export const login = (req:Request, res: Response) =>{
         {expiresIn : "1h"} // options : durrée de validité du token
     )
 
-    return res.json({
+    /*return res.json({
         message : "login successful",
         email,
         token
-    })
+    })*/
+   return res.cookie("token", token, {
+        httpOnly : true // set to true in production with HTTPS
+   })
+    .json({
+        message : "login successful",
+        email,
+        token
+    });
     
+}
+export const profile = (req : Request, res : Response) =>{
+    // @ts-ignore
+    const user = req.user;
+
+    res.json({
+        message : " Access ",
+        user
+    });
 }
