@@ -22,7 +22,7 @@ export const login = (req:Request, res: Response) =>{
     // Generate JWT token
     const token = jwt.sign(
         {email : fakeUser.email}, // payload
-        "mysecret", // secret key
+        process.env.JWT_SECRET as string, // secret key
         {expiresIn : "1h"} // options : durrée de validité du token
     )
 

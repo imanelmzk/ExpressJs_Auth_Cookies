@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-const SECRET = "mysecret";
+const SECRET = process.env.JWT_SECRET; // Pour sécuriser le token, on utilise une variable d'environnement pour stocker la clé secrète. Assurez-vous de définir cette variable dans votre environnement de développement ou de production.
 
 interface AuthRequest extends Request {
     user?:any;
@@ -14,8 +14,8 @@ const authMiddleware = (req : AuthRequest, res: Response, next: NextFunction) =>
         return res.status(401).json({message: "Unauthorized"});
     }
     try{
-        const decoded = jwt.verify(token, SECRET);
-        req.user = decoded;
+        const decoded = jwt.verify(token, SECRET as string);
+        req.user = decoded; //Données du token
         next();
     }
     catch(error){
