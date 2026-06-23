@@ -32,7 +32,11 @@ export const login = (req:Request, res: Response) =>{
         token
     })*/
    return res.cookie("token", token, {
-        httpOnly : true // set to true in production with HTTPS
+        httpOnly : true, // set to true in production with HTTPS
+        secure : process.env.NODE_ENV === "production",// Seulement HTTPS
+        sameSite : "strict", // Empeche attaques CSRF (Protection CSRF)
+        maxAge : 3600000 // 1 hour == Durée de vie  
+        
    })
     .json({
         message : "login successful",
