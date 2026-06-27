@@ -20,7 +20,7 @@ export const register = async (req : Request, res : Response) =>{
 export const login = async(req:Request, res: Response) =>{
     const {email, password} = req.body;
 
-    const user = await findUserByEmail(email);
+    const user = await findUserByEmail(email, password);
     /*const fakeUser = {
         email : "test@test.com",
         password : "123456"
