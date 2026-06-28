@@ -1,3 +1,4 @@
+import { userInfo } from "node:os";
 import {PrismaClient} from "../generated/prisma";
 import bcrypt from "bcryptjs";
 
@@ -26,5 +27,13 @@ export const findUserByEmail = async( email : string, password: string) =>{
         throw new Error("Invalid password");
     }
     return user;
+}
+export const authenticateUser = async (email: string, password: string) => {
+    const user = await findUserByEmail(email, password);
+    const comparePassword = await bcrypt.compare(password, user.password);
+    if (!comparePassword) {
+        throw new Error("Invalid password");
+    }
+    return userInfo;
 }
 
