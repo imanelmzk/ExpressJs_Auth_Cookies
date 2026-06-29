@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
-import { createUser, findUserByEmail } from '../services/auth.service';
+import { createUser, authenticateUser } from '../services/auth.service';
 export const register = async (req : Request, res : Response) =>{
     const {email, password} = req.body;
 
@@ -20,13 +20,14 @@ export const register = async (req : Request, res : Response) =>{
 export const login = async(req:Request, res: Response) =>{
     const {email, password} = req.body;
 
-    const user = await findUserByEmail(email, password);
+    const user = await authenticateUser(email, password);
     /*const fakeUser = {
         email : "test@test.com",
         password : "123456"
     };*/
 
-    if(!user || user.password !== password){ {
+    
+    if(!user){ {
         return res.status(401).json({
             message : "Invalid credentials"
         });

@@ -13,27 +13,33 @@ export const createUser = async (email: string, password: string)=>{
     });
 }
 
-export const findUserByEmail = async( email : string, password: string) =>{
+export const findUserByEmail = async( email : string) =>{
     const user = await prisma.user.findUnique({
         where : {
             email
         }
     });
+    /*
     if (!user) {
         throw new Error("User not found");
     }
     const hashedComparePassword = await bcrypt.compare(password, user.password); // Compare the provided password with the hashed password in the database
     if (!hashedComparePassword) {
         throw new Error("Invalid password");
-    }
+    }*/
     return user;
 }
+
+
 export const authenticateUser = async (email: string, password: string) => {
-    const user = await findUserByEmail(email, password);
+    const user = await findUserByEmail(email);
+    if(!user){
+        return null;
+    }
     const comparePassword = await bcrypt.compare(password, user.password);
     if (!comparePassword) {
         throw new Error("Invalid password");
     }
-    return userInfo;
+    return user;
 }
 
