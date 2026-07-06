@@ -1,6 +1,30 @@
 import {Request, Response} from 'express';
+import {createUserSchema} from '../validations/zod';
 import jwt from 'jsonwebtoken';
 import { createUser, authenticateUser } from '../services/auth.service';
+
+export const teste = async (req: Request, res: Response) => {
+    try{
+        const validatedData = createUserSchema.parse(req.body);
+
+        const { name, email} = validatedData;
+
+            res.json({
+                message: "Validation successful",
+                name,
+                email,
+            });
+
+    } catch (error) {
+        return res.status(400).json({
+            message: "Validation failed",
+            error
+        });
+    }
+
+    
+}
+/*
 export const register = async (req : Request, res : Response) =>{
     const {email, password} = req.body;
 
@@ -15,7 +39,7 @@ export const register = async (req : Request, res : Response) =>{
             message : "Error registering user"
         });
     }
-};
+};*/
 
 export const login = async(req:Request, res: Response) =>{
     
