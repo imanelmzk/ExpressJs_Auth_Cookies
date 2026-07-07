@@ -2,6 +2,33 @@
 
 > A modern and scalable RESTful Backend API built with **Node.js**, **Express.js**, **TypeScript**, **Prisma ORM**, and **PostgreSQL**.
 > This project demonstrates modern backend development practices including authentication, authorization, database management, security, and clean architecture.
+> 🏆 Hero Banner
+
+📖 About the Project
+✨ Features
+🛠️ Tech Stack
+🏗️ Backend Architecture
+📂 Project Structure
+⚙️ Installation
+🔑 Environment Variables
+🗄️ Database
+🔄 Prisma Workflow
+🔐 Authentication Flow (JWT)
+🍪 Cookie Authentication
+🔒 Password Hashing
+📡 API Endpoints
+📊 HTTP Status Codes
+🧪 Testing
+📦 Available Scripts
+🚀 Deployment
+🐳 Docker Support
+🌐 Nginx Reverse Proxy
+🏛️ Software Architecture
+📈 Roadmap
+📚 What I Learned
+🤝 Contribution
+📄 License
+⭐ Support
 
 ---
 
