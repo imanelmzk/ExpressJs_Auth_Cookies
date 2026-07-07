@@ -1,18 +1,18 @@
 import {Request, Response} from 'express';
-import {createUserSchema} from '../validations/zod';
+import {registerSchema} from '../validations/zod';
 import jwt from 'jsonwebtoken';
 import { createUser, authenticateUser } from '../services/auth.service';
 
 export const teste = async (req: Request, res: Response) => {
     try{
-        const validatedData = createUserSchema.parse(req.body);
+        const validatedData = registerSchema.parse(req.body);
 
-        const { name, email} = validatedData;
+        const { email, password} = validatedData;
 
             res.json({
                 message: "Validation successful",
-                name,
                 email,
+                password
             });
 
     } catch (error) {
