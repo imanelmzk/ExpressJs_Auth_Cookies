@@ -1,19 +1,18 @@
 import {Request, Response} from 'express';
-import {registerSchema} from '../validations/zod';
+import {loginSchema, registerSchema} from '../validations/zod';
 import jwt from 'jsonwebtoken';
 import { createUser, authenticateUser } from '../services/auth.service';
 
-export const teste = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
     try{
         const validatedData = registerSchema.parse(req.body);
-
         const { email, password} = validatedData;
 
-            res.json({
-                message: "Validation successful",
-                email,
-                password
-            });
+        const user = await createUser(email, password);
+         return res.status(201).json({
+            message : "User registered successfully",
+            user
+         })
 
     } catch (error) {
         return res.status(400).json({
@@ -42,51 +41,53 @@ export const register = async (req : Request, res : Response) =>{
 };*/
 
 export const login = async(req:Request, res: Response) =>{
-    
-    
-    const {email, password} = req.body;
-
-    const user = await authenticateUser(email, password);
-    
-    /*const fakeUser = {
-        email : "test@test.com",
-        password : "123456"
-    };*/
-
-    
-    if(!user){ {
-        return res.status(401).json({
-            message : "Invalid credentials"
-        });
-    }
-}
-
-    // Generate JWT token
-    const token = jwt.sign(
-        {email : user.email}, // payload
-        process.env.JWT_SECRET as string, // secret key
-        {expiresIn : "1h"} // options : durrée de validité du token
-    )
-
-    /*return res.json({
-        message : "login successful",
-        email,
-        token
-    })*/
-   
-   return res
-        .cookie("token", token, {
-            httpOnly : true, // set to true in production with HTTPS
-            secure : process.env.NODE_ENV === "production",// Seulement HTTPS
-            sameSite : "strict", // Empeche attaques CSRF (Protection CSRF)
-            maxAge : 3600000 // 1 hour == Durée de vie  
+    try{
+        const validatedData = loginSchema.parse(req.body);
+        const {email, password} = validatedData;
+        const user = await authenticateUser(email, password);
         
-        })
-        .json({
+        /*const fakeUser = {
+            email : "test@test.com",
+            password : "123456"
+        };*/
+        
+        if(!user){ {
+            return res.status(401).json({
+                message : "Invalid credentials"
+            });
+        }
+            }
+        // Generate JWT token
+        const token = jwt.sign(
+            {email : user.email}, // payload
+            process.env.JWT_SECRET as string, // secret key
+            {expiresIn : "1h"} // options : durrée de validité du token
+        )
+
+        /*return res.json({
             message : "login successful",
             email,
             token
-    });
+        })*/
+    
+    return res
+            .cookie("token", token, {
+                httpOnly : true, // set to true in production with HTTPS
+                secure : process.env.NODE_ENV === "production",// Seulement HTTPS
+                sameSite : "strict", // Empeche attaques CSRF (Protection CSRF)
+                maxAge : 3600000 // 1 hour == Durée de vie  
+            
+            })
+            .json({
+                message : "login successful",
+                email,
+                token
+        });
+    }catch(error){
+        return res.status(400).json({
+            message : "Error occurred while processing login"
+        });
+    }
     
     
 }
